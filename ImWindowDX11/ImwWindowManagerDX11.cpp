@@ -43,11 +43,7 @@ bool ImwWindowManagerDX11::InternalInit()
 	iResult = D3D11CreateDevice( NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-#ifdef _DEBUG
-		D3D11_CREATE_DEVICE_DEBUG,
-#else
-		NULL,
-#endif
+		0,
 		NULL,
 		NULL,
 		D3D11_SDK_VERSION,

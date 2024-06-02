@@ -29,7 +29,7 @@ namespace ImWindow
 			oNewIO.ClipboardUserData = oGlobalIO.ClipboardUserData;
 			oNewIO.GetClipboardTextFn = oGlobalIO.GetClipboardTextFn;
 			oNewIO.SetClipboardTextFn = oGlobalIO.SetClipboardTextFn;
-			oNewIO.ImeSetInputScreenPosFn = oGlobalIO.ImeSetInputScreenPosFn;
+			oNewIO.SetPlatformImeDataFn = oGlobalIO.SetPlatformImeDataFn;
 			oNewIO.IniFilename = NULL;
 		}
 	}
@@ -147,7 +147,7 @@ namespace ImWindow
 		if (m_pContext != NULL)
 		{
 			SetContext(false);
-			ImGui::Shutdown( m_pContext );
+			ImGui::Shutdown();
 			RestoreContext(false);
 			ImGui::DestroyContext(m_pContext);
 			m_pContext = NULL;

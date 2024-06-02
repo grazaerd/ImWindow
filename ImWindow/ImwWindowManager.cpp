@@ -198,7 +198,7 @@ namespace ImWindow
 		ImGuiContext* pContext = ImGui::GetCurrentContext();
 		if(pContext)
 		{
-			ImGui::Shutdown(pContext);
+			ImGui::Shutdown();
 			ImGui::DestroyContext(pContext);
 		}
 	}
@@ -599,7 +599,7 @@ namespace ImWindow
 			ImGui::SameLine();
 		}
 
-		ImGui::Dummy(ImVec2(ImGui::GetContentRegionAvailWidth() - 3.f * c_fButtonWidth, 1.f));
+		ImGui::Dummy(ImVec2(ImGui::GetContentRegionAvail().x - 3.f * c_fButtonWidth, 1.f));
 
 		ImU32 iColor = ImGui::GetColorU32(ImGuiCol_Text);
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.f, 0.f));
@@ -1060,7 +1060,7 @@ namespace ImWindow
 			if (bDisplayMenus)
 			{
 				oSize.y += pContext->FontSize + pContext->Style.FramePadding.y * 2.0f;
-				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight();
+				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight;
 
 			}
 			ImGui::SetNextWindowSize(oSize, ImGuiCond_Always);
@@ -1196,7 +1196,7 @@ namespace ImWindow
 		m_pCurrentPlatformWindow = pWindow;
 		pWindow->SetContext(true);
 
-		ImDrawList* pDrawList = ImGui::GetOverlayDrawList();
+		ImDrawList* pDrawList = ImGui::GetForegroundDrawList();
 		for (ImVector<DrawWindowAreaAction>::iterator it = m_lDrawWindowAreas.begin(); it != m_lDrawWindowAreas.end(); ++it)
 		{
 			DrawWindowAreaAction& oAction = *it;
