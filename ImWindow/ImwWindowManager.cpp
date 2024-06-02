@@ -90,7 +90,7 @@ namespace ImWindow
 	bool ImwWindowManager::Init()
 	{
 		InternalInit();
-
+		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.IniFilename = NULL;
@@ -590,7 +590,7 @@ namespace ImWindow
 			ImGui::SameLine();
 		}
 
-		ImGui::Dummy(ImVec2(ImGui::GetContentRegionAvailWidth() - 3.f * c_fButtonWidth, 1.f));
+		ImGui::Dummy(ImVec2(ImGui::GetContentRegionAvail().x - 3.f * c_fButtonWidth, 1.f));
 
 		ImU32 iColor = ImGui::GetColorU32(ImGuiCol_Text);
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.f, 0.f));
@@ -1036,10 +1036,10 @@ namespace ImWindow
 		bool bDisplayMenus = pWindow->IsShowContent() || oIO.MousePos.y <= 50.f || pContext->OpenPopupStack.size() > 0;
 		bool bDisplayWindow = bDisplayMenus || IsUsingCustomFrame();
 
-		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiSetCond_Always);
+		ImGui::SetNextWindowPos(ImVec2(0, 0), ImGuiCond_Always);
 		if (pWindow->IsShowContent())
 		{
-			ImGui::SetNextWindowSize(pWindow->GetSize(), ImGuiSetCond_Always);
+			ImGui::SetNextWindowSize(pWindow->GetSize(), ImGuiCond_Always);
 		}
 		else
 		{
@@ -1052,10 +1052,10 @@ namespace ImWindow
 			if (bDisplayMenus)
 			{
 				oSize.y += pContext->FontSize + pContext->Style.FramePadding.y * 2.0f;
-				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight();
+				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight;
 
 			}
-			ImGui::SetNextWindowSize(oSize, ImGuiSetCond_Always);
+			ImGui::SetNextWindowSize(oSize, ImGuiCond_Always);
 		}
 		int iFlags = c_iWindowFlags;
 
@@ -1072,7 +1072,7 @@ namespace ImWindow
 			oStyle.WindowRounding = 0.f;
 			oStyle.WindowPadding = ImVec2(0.f, 0.f);
 			oStyle.WindowMinSize = ImVec2(0.f, 0.f);
-			bool bWindowDraw = ImGui::Begin("ImWindow", NULL, ImVec2(0.f, 0.f), 1.f, iFlags);
+			bool bWindowDraw = ImGui::Begin("ImWindow", NULL, iFlags);
 			oStyle.WindowRounding = fWindowRoundingBackup;
 			oStyle.WindowPadding = oWindowPaddingBackup;
 			oStyle.WindowMinSize = oWindowMinSizeBackup;
@@ -1151,7 +1151,7 @@ namespace ImWindow
 
 							if (BeginTransparentChild("##ImWindowStatusBars", ImVec2(0.f, 0.f), false, c_iWindowChildFlags))
 							{
-								ImGui::AlignFirstTextHeightToWidgets();
+								ImGui::AlignTextToFramePadding();
 
 								ImGui::Columns((int)m_lStatusBars.size());
 								for (ImwStatusBarVector::iterator it = m_lStatusBars.begin(); it != m_lStatusBars.end(); ++it)
@@ -1188,7 +1188,7 @@ namespace ImWindow
 		m_pCurrentPlatformWindow = pWindow;
 		pWindow->SetContext(true);
 
-		ImDrawList* pDrawList = &(ImGui::GetCurrentContext()->OverlayDrawList);
+		ImDrawList* pDrawList = ImGui::GetForegroundDrawList();
 		for (ImVector<DrawWindowAreaAction>::iterator it = m_lDrawWindowAreas.begin(); it != m_lDrawWindowAreas.end(); ++it)
 		{
 			DrawWindowAreaAction& oAction = *it;
@@ -1641,10 +1641,10 @@ void ImwWindowManager::AddStatusBar(ImwStatusBar* pStatusBar)
 	bool ImwWindowManager::BeginTransparentChild(const char* pName, const ImVec2& oSize, bool bBorder, ImGuiWindowFlags iFlags)
 	{
 		ImGuiStyle& oStyle = ImGui::GetStyle();
-		ImVec4 oBackupChildWindowBg = oStyle.Colors[ImGuiCol_ChildWindowBg];
-		oStyle.Colors[ImGuiCol_ChildWindowBg].w = 0.f;
+		ImVec4 oBackupChildWindowBg = oStyle.Colors[ImGuiCol_ChildBg];
+		oStyle.Colors[ImGuiCol_ChildBg].w = 0.f;
 		bool bRet = ImGui::BeginChild(pName, oSize, bBorder, iFlags);
-		oStyle.Colors[ImGuiCol_ChildWindowBg] = oBackupChildWindowBg;
+		oStyle.Colors[ImGuiCol_ChildBg] = oBackupChildWindowBg;
 		return bRet;
 	}
 

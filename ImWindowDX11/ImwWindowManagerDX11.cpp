@@ -44,7 +44,7 @@ bool ImwWindowManagerDX11::InternalInit()
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
 #ifdef _DEBUG
-		D3D11_CREATE_DEVICE_DEBUG,
+		NULL, //D3D11_CREATE_DEVICE_DEBUG, // use if you have SDK
 #else
 		NULL,
 #endif

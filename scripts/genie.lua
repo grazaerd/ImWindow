@@ -213,13 +213,15 @@ if _OPTIONS["with-sff"] then
 							"../Externals/UtilsCollection/JsonStthm/*.cpp",
 							"../Externals/UtilsCollection/JsonStthm/*.h",
 							"../Externals/imgui/imconfig.h",
-							"../Externals/imgui/imgui.h",
-							"../Externals/imgui/imgui_internal.h",
 							"../Externals/imgui/imgui.cpp",
+							"../Externals/imgui/imgui.h",
 							"../Externals/imgui/imgui_draw.cpp",
-							"../Externals/imgui/stb_rect_pack.h",
-							"../Externals/imgui/stb_textedit.h",
-							"../Externals/imgui/stb_truetype.h",
+							"../Externals/imgui/imgui_internal.h",
+							"../Externals/imgui/imgui_tables.cpp",
+							"../Externals/imgui/imgui_widgets.cpp",
+							"../Externals/imgui/imstb_rectpack.h",
+							"../Externals/imgui/imstb_textedit.h",
+							"../Externals/imgui/imstb_truetype.h",
 			}
 			
 			
@@ -256,13 +258,15 @@ end
 							"../Externals/UtilsCollection/JsonStthm/*.cpp",
 							"../Externals/UtilsCollection/JsonStthm/*.h",
 							"../Externals/imgui/imconfig.h",
-							"../Externals/imgui/imgui.h",
-							"../Externals/imgui/imgui_internal.h",
 							"../Externals/imgui/imgui.cpp",
+							"../Externals/imgui/imgui.h",
 							"../Externals/imgui/imgui_draw.cpp",
-							"../Externals/imgui/stb_rect_pack.h",
-							"../Externals/imgui/stb_textedit.h",
-							"../Externals/imgui/stb_truetype.h",
+							"../Externals/imgui/imgui_internal.h",
+							"../Externals/imgui/imgui_tables.cpp",
+							"../Externals/imgui/imgui_widgets.cpp",
+							"../Externals/imgui/imstb_rectpack.h",
+							"../Externals/imgui/imstb_textedit.h",
+							"../Externals/imgui/imstb_truetype.h",
 		}
 		
 		vpaths {
