@@ -68,7 +68,7 @@ bool ImwPlatformWindowEasyWindow::Init(ImwPlatformWindow* pMain)
 
 	ImGui::GetMainViewport()->PlatformHandleRaw = m_pWindow->GetHandle();
 
-	io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontDefault(); //Crashes I don't know why
 
 	return true;
 }
