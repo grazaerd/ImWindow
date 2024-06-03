@@ -58,3 +58,6 @@ ImWindow.h
 
 Externals/glfw-*
 scripts/*.zip
+
+#Temp Files
+*.TMP
