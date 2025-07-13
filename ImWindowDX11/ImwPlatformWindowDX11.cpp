@@ -196,8 +196,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 				if (pVertexShaderBlob == NULL) // NB: Pass ID3D10Blob* pErrorBlob to D3DCompile() to get error showing in (const char*)pErrorBlob->GetBufferPointer(). Make sure to Release() the blob!
 				{
 					char pErrorMessage[1024];
-					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-					MessageBox(NULL, pErrorMessage, TEXT("Error : Can't compile vertex shader"), MB_ICONERROR | MB_OK);
+					FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+					MessageBoxA(NULL, pErrorMessage, "Error : Can't compile vertex shader", MB_ICONERROR | MB_OK);
 					return false;
 				}
 
@@ -205,8 +205,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 				if (FAILED(iResult))
 				{
 					char pErrorMessage[1024];
-					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-					MessageBox(NULL, pErrorMessage, TEXT("Error : Can't create vertex shader"), MB_ICONERROR | MB_OK);
+					FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+					MessageBoxA(NULL, pErrorMessage, "Error : Can't create vertex shader", MB_ICONERROR | MB_OK);
 					return false;
 				}
 
@@ -221,8 +221,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 				if (FAILED(iResult))
 				{
 					char pErrorMessage[1024];
-					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-					MessageBox(NULL, pErrorMessage, TEXT("Error : Can't create input layout for vertex shader"), MB_ICONERROR | MB_OK);
+					FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+					MessageBoxA(NULL, pErrorMessage, "Error : Can't create input layout for vertex shader", MB_ICONERROR | MB_OK);
 					return false;
 				}
 
@@ -238,8 +238,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 					if (FAILED(iResult))
 					{
 						char pErrorMessage[1024];
-						FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-						MessageBox(NULL, pErrorMessage, TEXT("Error : Can't create constant buffer"), MB_ICONERROR | MB_OK);
+						FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+						MessageBoxA(NULL, pErrorMessage, "Error : Can't create constant buffer", MB_ICONERROR | MB_OK);
 						return false;
 					}
 				}
@@ -254,8 +254,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 				if (pPixelShaderBlob == NULL)  // NB: Pass ID3D10Blob* pErrorBlob to D3DCompile() to get error showing in (const char*)pErrorBlob->GetBufferPointer(). Make sure to Release() the blob!
 				{
 					char pErrorMessage[1024];
-					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-					MessageBox(NULL, pErrorMessage, TEXT("Error : Can't compile pixel shader"), MB_ICONERROR | MB_OK);
+					FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+					MessageBoxA(NULL, pErrorMessage, "Error : Can't compile pixel shader", MB_ICONERROR | MB_OK);
 					return false;
 				}
 
@@ -263,8 +263,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 				if (FAILED(iResult))
 				{
 					char pErrorMessage[1024];
-					FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-					MessageBox(NULL, pErrorMessage, TEXT("Error : Can't create pixel shader"), MB_ICONERROR | MB_OK);
+					FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+					MessageBoxA(NULL, pErrorMessage, "Error : Can't create pixel shader", MB_ICONERROR | MB_OK);
 					return false;
 				}
 			}
@@ -328,8 +328,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 		if (FAILED(iResult))
 		{
 			char pErrorMessage[1024];
-			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-			MessageBox(NULL, pErrorMessage, TEXT("Error: Can't create swap chain"), MB_ICONERROR | MB_OK);
+			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+			MessageBoxA(NULL, pErrorMessage, "Error: Can't create swap chain", MB_ICONERROR | MB_OK);
 			return false;
 		}
 
@@ -338,8 +338,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 		if (FAILED(iResult))
 		{
 			char pErrorMessage[1024];
-			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-			MessageBox(NULL, pErrorMessage, TEXT("Error : DXGI MakeWindowAssociation failed!"), MB_ICONERROR | MB_OK);
+			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+			MessageBoxA(NULL, pErrorMessage, "Error : DXGI MakeWindowAssociation failed!", MB_ICONERROR | MB_OK);
 			//return false;
 		}
 
@@ -349,8 +349,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 		if (FAILED(iResult))
 		{
 			char pErrorMessage[1024];
-			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-			MessageBox(NULL, pErrorMessage, TEXT("Error : Can't get Buffer of swapchain"), MB_ICONERROR | MB_OK);
+			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+			MessageBoxA(NULL, pErrorMessage, "Error : Can't get Buffer of swapchain", MB_ICONERROR | MB_OK);
 			return false;
 		}
 
@@ -360,8 +360,8 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 		if (FAILED(iResult))
 		{
 			char pErrorMessage[1024];
-			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-			MessageBox(NULL, pErrorMessage, TEXT("Error : Can't create RenderTargetView"), MB_ICONERROR | MB_OK);
+			FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+			MessageBoxA(NULL, pErrorMessage, "Error : Can't create RenderTargetView", MB_ICONERROR | MB_OK);
 			return false;
 		}
 

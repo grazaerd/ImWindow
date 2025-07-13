@@ -35,8 +35,8 @@ bool ImwWindowManagerDX11::InternalInit()
 	if( FAILED( iResult ) )
 	{
 		char pErrorMessage[1024];
-		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-		MessageBox( NULL, pErrorMessage, TEXT( "Can't create FXGI factory" ), MB_ICONERROR | MB_OK );
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+		MessageBoxA( NULL, pErrorMessage,  "Can't create FXGI factory", MB_ICONERROR | MB_OK );
 		return false;
 	}
 
@@ -54,8 +54,8 @@ bool ImwWindowManagerDX11::InternalInit()
 	if( FAILED( iResult ) )
 	{
 		char pErrorMessage[1024];
-		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
-		MessageBox( NULL, pErrorMessage, TEXT( "Can't create DX11 device and device context" ), MB_ICONERROR | MB_OK );
+		FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, iResult, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&pErrorMessage, 1024, NULL);
+		MessageBoxA( NULL, pErrorMessage, "Can't create DX11 device and device context" , MB_ICONERROR | MB_OK );
 		return false;
 	}
 
