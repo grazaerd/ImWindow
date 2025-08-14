@@ -2,9 +2,9 @@
 #ifndef __IM_WINDOW_MANAGER_EASYWINDOW_H__
 #define __IM_WINDOW_MANAGER_EASYWINDOW_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 
-#include "ImwWindowManager.h"
+#include "../ImWindow/ImwWindowManager.h"
 
 namespace ImWindow
 {

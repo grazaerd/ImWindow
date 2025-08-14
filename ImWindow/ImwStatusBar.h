@@ -2,7 +2,7 @@
 #ifndef __IM_STATUS_BAR_H__
 #define __IM_STATUS_BAR_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 
 namespace ImWindow
 {

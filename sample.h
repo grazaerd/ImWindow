@@ -148,9 +148,6 @@ public:
 			style.Colors[ImGuiCol_ResizeGrip] = ImVec4(1.00f, 1.00f, 1.00f, 0.30f);
 			style.Colors[ImGuiCol_ResizeGripHovered] = ImVec4(1.00f, 1.00f, 1.00f, 0.60f);
 			style.Colors[ImGuiCol_ResizeGripActive] = ImVec4(1.00f, 1.00f, 1.00f, 0.90f);
-			//style.Colors[ImGuiCol_CloseButton] = ImVec4(0.50f, 0.50f, 0.90f, 0.50f);
-			//style.Colors[ImGuiCol_CloseButtonHovered] = ImVec4(0.70f, 0.70f, 0.90f, 0.60f);
-			//style.Colors[ImGuiCol_CloseButtonActive] = ImVec4(0.70f, 0.70f, 0.70f, 1.00f);
 			style.Colors[ImGuiCol_PlotLines] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 			style.Colors[ImGuiCol_PlotLinesHovered] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
 			style.Colors[ImGuiCol_PlotHistogram] = ImVec4(0.90f, 0.70f, 0.00f, 1.00f);
@@ -369,7 +366,7 @@ public:
 			ImGui::Checkbox("Anti-aliased lines", &style.AntiAliasedLines);
 			ImGui::Checkbox("Anti-aliased fill", &style.AntiAliasedFill);
 			ImGui::PushItemWidth(100);
-			ImGui::DragFloat("Curve Tessellation Tolerance", &style.CurveTessellationTol, 0.02f, 0.10f, FLT_MAX, NULL, 2.0f);
+			ImGui::DragFloat("Curve Tessellation Tolerance", &style.CurveTessellationTol, 0.02f, 0.10f, FLT_MAX, NULL, ImGuiSliderFlags_Logarithmic );
 			if (style.CurveTessellationTol < 0.0f) style.CurveTessellationTol = 0.10f;
 			ImGui::PopItemWidth();
 			ImGui::TreePop();
@@ -417,10 +414,10 @@ public:
 			ImGui::SameLine(); ImGui::PushItemWidth(120); ImGui::Combo("##output_type", &output_dest, "To Clipboard\0To TTY"); ImGui::PopItemWidth();
 			ImGui::SameLine(); ImGui::Checkbox("Only Modified Fields", &output_only_modified);
 
-			static ImGuiColorEditFlags edit_mode = ImGuiColorEditFlags_DisplayRGB;
-			ImGui::RadioButton("RGB", &edit_mode, ImGuiColorEditFlags_DisplayRGB);
+			static ImGuiColorEditFlags edit_mode = ImGuiColorEditFlags_InputRGB|ImGuiColorEditFlags_DisplayRGB;
+			ImGui::RadioButton("RGB", &edit_mode, ImGuiColorEditFlags_InputRGB|ImGuiColorEditFlags_DisplayRGB);
 			ImGui::SameLine();
-			ImGui::RadioButton("HSV", &edit_mode, ImGuiColorEditFlags_DisplayHSV);
+			ImGui::RadioButton("HSV", &edit_mode, ImGuiColorEditFlags_InputHSV|ImGuiColorEditFlags_DisplayHSV);
 			ImGui::SameLine();
 			ImGui::RadioButton("HEX", &edit_mode, ImGuiColorEditFlags_DisplayHex);
 			//ImGui::Text("Tip: Click on colored square to change edit mode.");
@@ -430,14 +427,13 @@ public:
 
 			ImGui::PushID("#colors");
 			ImGui::PushItemWidth(-160);
-			ImGui::SetColorEditOptions(edit_mode);
 			for (int i = 0; i < ImGuiCol_COUNT; i++)
 			{
 				const char* name = ImGui::GetStyleColorName(i);
 				if (!filter.PassFilter(name))
 					continue;
 				ImGui::PushID(i);
-				ImGui::ColorEdit4(name, (float*)&style.Colors[i], true);
+				ImGui::ColorEdit4(name, (float*)&style.Colors[i], edit_mode);
 				if (memcmp(&style.Colors[i], (ref ? &ref->Colors[i] : &def.Colors[i]), sizeof(ImVec4)) != 0)
 				{
 					ImGui::SameLine(); if (ImGui::Button("Revert")) style.Colors[i] = ref ? ref->Colors[i] : def.Colors[i];
@@ -715,6 +711,7 @@ public:
 
 	virtual void OnMenu()
 	{
+		bool bOpenExitPopup = false;
 		if (ImGui::BeginMenu("My menu"))
 		{
 			if (ImGui::MenuItem("Show content", NULL, ImWindow::ImwWindowManager::GetInstance()->GetMainPlatformWindow()->IsShowContent()))
@@ -726,10 +723,33 @@ public:
 
 			if (ImGui::MenuItem("Exit"))
 			{
-				ImWindow::ImwWindowManager::GetInstance()->Destroy();
+				bOpenExitPopup = true;
 			}
 
 			ImGui::EndMenu();
+		}
+
+		if (bOpenExitPopup)
+		{
+			ImGui::OpenPopup("Exit");;
+		}
+
+		if (ImGui::BeginPopupModal("Exit"))
+		{
+			ImGui::Text("Are you sure ?");
+
+			if (ImGui::Button("Yes"))
+			{
+				ImWindow::ImwWindowManager::GetInstance()->Destroy();
+				ImGui::CloseCurrentPopup();
+			}
+
+			if (ImGui::Button("No"))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
 		}
 	}
 };

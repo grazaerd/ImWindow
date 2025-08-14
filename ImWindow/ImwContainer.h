@@ -2,7 +2,7 @@
 #ifndef __IMW_CONTAINER_H__
 #define __IMW_CONTAINER_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 #include "ImwWindow.h"
 
 namespace ImWindow
@@ -25,6 +25,7 @@ namespace ImWindow
 		ImwWindow*						GetWindowAtPos(const ImVec2& oPos) const;
 		const ImwContainer*				HasWindow(ImwWindow* pWindow) const;
 		bool							FocusWindow(ImwWindow* pWindow);
+		bool							IsFocusedWindow(ImwWindow* pWindow) const;
 		ImwWindow*						GetActiveWindow() const;
 		ImwPlatformWindow*				GetPlatformWindowParent() const;
 		const ImwContainer*				GetBestContainer(const ImVec2& oCursorPos) const;

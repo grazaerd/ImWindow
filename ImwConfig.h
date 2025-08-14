@@ -37,7 +37,7 @@
 
 // Allow serialization of layout, need JsonStthm
 #define IMW_USE_LAYOUT_SERIALIZATION
-#include "JsonStthm.h"
+#include "../UtilsCollection/JsonStthm/JsonStthm.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Include here imgui.h

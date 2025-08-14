@@ -2,7 +2,7 @@
 #ifndef __IM_MENU_H__
 #define __IM_MENU_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 
 namespace ImWindow
 {

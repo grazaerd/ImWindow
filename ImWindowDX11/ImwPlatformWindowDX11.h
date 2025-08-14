@@ -2,8 +2,8 @@
 #ifndef __IM_PLATFORM_WINDOW_DX11_H__
 #define __IM_PLATFORM_WINDOW_DX11_H__
 
-#include "ImwConfig.h"
-#include "ImwPlatformWindowEasyWindow.h"
+#include "../ImwConfig.h"
+#include "../ImWindowEasyWindow/ImwPlatformWindowEasyWindow.h"
 
 struct IDXGIFactory;
 struct IDXGISwapChain;
@@ -30,6 +30,7 @@ namespace ImWindow
 		virtual								~ImwPlatformWindowDX11();
 
 		virtual bool						Init(ImwPlatformWindow* pMain);
+		virtual void						RegenFontTexture(ImwPlatformWindow* pMain);
 	protected:
 		virtual void						RenderDrawLists(ImDrawData* pDrawData);
 

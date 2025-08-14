@@ -67,6 +67,7 @@ namespace ImWindow
 		s_pInstance = this;
 		m_bSelfManagedTitleBar = true;
 		m_pMainTitle = NULL;
+		m_pImGuiContext = NULL;
 		m_pMainPlatformWindow = NULL;
 		m_pDragPlatformWindow = NULL;
 		m_pCurrentPlatformWindow = NULL;
@@ -78,6 +79,7 @@ namespace ImWindow
 		m_oDragPreviewOffset = ImVec2(-20, -10);
 		m_bHasWantCaptureKeyboard = false;
 		m_bHasWantCaptureMouse = false;
+		m_bHasWantTextInput = false;
 	}
 
 	ImwWindowManager::~ImwWindowManager()
@@ -89,14 +91,24 @@ namespace ImWindow
 
 	bool ImwWindowManager::Init()
 	{
+		m_pImGuiContext = ImGui::CreateContext();
+		if (m_pImGuiContext == NULL)
+			return false;
+
+		ImGui::SetCurrentContext(m_pImGuiContext);
+
 		InternalInit();
-		ImGui::CreateContext();
+
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.IniFilename = NULL;
 
-		//io.Fonts->AddFontFromFileTTF( "res/DroidSans.ttf", 16 ) || io.Fonts->AddFontDefault();
-		//io.Fonts->AddFontFromFileTTF( "res/DroidSans-Bold.ttf", 16 ) || io.Fonts->AddFontDefault();
+		// Add default font
+		if (io.Fonts->Fonts.size() == 0)
+		{
+			io.Fonts->AddFontDefault();
+			io.Fonts->Build();
+		}
 
 		m_pMainPlatformWindow = CreatePlatformWindow(E_PLATFORM_WINDOW_TYPE_MAIN, NULL);
 		if (NULL != m_pMainPlatformWindow)
@@ -189,9 +201,19 @@ namespace ImWindow
 				m_pMainPlatformWindow->PreDestroy();
 				ImwSafeDelete(m_pMainPlatformWindow);
 			}
-		}
 
-		InternalDestroy();
+			InternalDestroy();
+			if (m_pImGuiContext != NULL)
+			{
+				ImGui::DestroyContext(m_pImGuiContext);
+				m_pImGuiContext = NULL;
+			}
+		}
+	}
+
+	ImGuiContext* ImwWindowManager::GetContext() const
+	{
+		return m_pImGuiContext;
 	}
 
 	bool ImwWindowManager::IsExiting() const
@@ -582,8 +604,6 @@ namespace ImWindow
 
 		ImDrawList* pDrawList = ImGui::GetWindowDrawList();
 
-		ImVec2 oMinTitleBarPos = ImGui::GetCursorPos();
-
 		if (bDrawTitle)
 		{
 			ImGui::TextUnformatted(GetMainTitle());
@@ -802,6 +822,7 @@ namespace ImWindow
 		{
 			m_bHasWantCaptureKeyboard = false;
 			m_bHasWantCaptureMouse = false;
+			m_bHasWantTextInput = false;
 			UpdateDragWindow();
 
 			Paint(m_pMainPlatformWindow);
@@ -1013,8 +1034,7 @@ namespace ImWindow
 		ImGuiContext* pContext = ImGui::GetCurrentContext();
 		ImGuiIO& oIO = pContext->IO;
 		oIO.DisplaySize = pWindow->GetSize();
-		if (pContext->FrameCountEnded >= pContext->FrameCount || !pContext->Initialized)
-			ImGui::NewFrame();
+		ImGui::NewFrame();
 
 		ImGuiStyle& oStyle = ImGui::GetStyle();
 
@@ -1052,7 +1072,7 @@ namespace ImWindow
 			if (bDisplayMenus)
 			{
 				oSize.y += pContext->FontSize + pContext->Style.FramePadding.y * 2.0f;
-				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight;
+				oSize.y += ImGui::GetCurrentWindowRead()->MenuBarHeight();
 
 			}
 			ImGui::SetNextWindowSize(oSize, ImGuiCond_Always);
@@ -1073,6 +1093,8 @@ namespace ImWindow
 			oStyle.WindowPadding = ImVec2(0.f, 0.f);
 			oStyle.WindowMinSize = ImVec2(0.f, 0.f);
 			bool bWindowDraw = ImGui::Begin("ImWindow", NULL, iFlags);
+			ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Tab, ImGui::GetCurrentWindow()->ID); // Disable ImGui CTRL+Tab
+			ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiMod_Shift | ImGuiKey_Tab, ImGui::GetCurrentWindow()->ID);
 			oStyle.WindowRounding = fWindowRoundingBackup;
 			oStyle.WindowPadding = oWindowPaddingBackup;
 			oStyle.WindowMinSize = oWindowMinSizeBackup;
@@ -1175,6 +1197,7 @@ namespace ImWindow
 
 		m_bHasWantCaptureKeyboard |= ImGui::GetIO().WantCaptureKeyboard;
 		m_bHasWantCaptureMouse |= ImGui::GetIO().WantCaptureMouse;
+		m_bHasWantTextInput |= ImGui::GetIO().WantTextInput;
 
 		pWindow->RestoreContext(true);
 	}
@@ -1653,5 +1676,16 @@ void ImwWindowManager::AddStatusBar(ImwStatusBar* pStatusBar)
 	{
 		return s_pInstance;
 	}
+
+	void ImwWindowManager::RegenFontTexture()
+	{
+		m_pMainPlatformWindow->RegenFontTexture(NULL);
+		m_pDragPlatformWindow->RegenFontTexture(m_pMainPlatformWindow);
+		for (ImwPlatformWindow* pWindow : m_lPlatformWindows)
+		{
+			pWindow->RegenFontTexture(m_pMainPlatformWindow);
+		}
+	}
+
 //SFF_END
 }

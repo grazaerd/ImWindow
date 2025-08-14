@@ -2,7 +2,7 @@
 #ifndef __IM_PLATFORM_WINDOW_H__
 #define __IM_PLATFORM_WINDOW_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 
 #include "ImwContainer.h"
 
@@ -35,6 +35,7 @@ namespace ImWindow
 		virtual								~ImwPlatformWindow();
 
 		virtual bool						Init(ImwPlatformWindow* pParent);
+		virtual void						RegenFontTexture(ImwPlatformWindow* pMain);
 
 		EPlatformWindowType					GetType() const;
 		bool								IsMainWindow() const;
@@ -61,6 +62,7 @@ namespace ImWindow
 		ImwWindow*							GetWindowAtPos(const ImVec2& oPos) const;
 		const ImwContainer*					HasWindow(ImwWindow* pWindow);
 		bool								FocusWindow(ImwWindow* pWindow);
+		bool								IsFocusedWindow(ImwWindow* pWindow) const;
 
 		bool								HasContext() const;
 		ImGuiContext*						GetContext();

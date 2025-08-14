@@ -2,7 +2,7 @@
 #ifndef __IM_WINDOW_MANAGER_H__
 #define __IM_WINDOW_MANAGER_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 #include "ImwWindow.h"
 #include "ImwMenu.h"
 #include "ImwPlatformWindow.h"
@@ -117,6 +117,7 @@ namespace ImWindow
 		void								Destroy();
 		bool								IsExiting() const;
 
+		ImGuiContext*						GetContext() const;
 		ImwPlatformWindow*					GetMainPlatformWindow() const;
 		const ImwPlatformWindowVector&		GetSecondariesPlatformWindows() const;
 		ImwPlatformWindow*					GetFocusedPlatformWindow() const;
@@ -142,6 +143,7 @@ namespace ImWindow
 
 		bool								HasWantCaptureKeyboard() const { return m_bHasWantCaptureKeyboard; }
 		bool								HasWantCaptureMouse() const { return m_bHasWantCaptureMouse; }
+		bool								HasWantTextInput() const { return m_bHasWantTextInput; }
 
 		bool								SaveLayoutToString(ImwString& sLayout, bool bCompact = false);
 		bool								SaveLayoutToFile(const char* pFilePath, bool bCompact = false);
@@ -155,9 +157,11 @@ namespace ImWindow
 		virtual ImwWindow*					CreateWindowByClassName(const char* pName);
 
 		virtual bool						IsUsingCustomFrame() const;
+		void								RegenFontTexture();
 	protected:
 		//To override for use multi window mode
 		virtual bool						CanCreateMultipleWindow();
+		// Init internal structures and fonts in InternalInit
 		virtual bool						InternalInit();
 		virtual void						InternalDestroy();
 		virtual ImwPlatformWindow*			CreatePlatformWindow(EPlatformWindowType eType, ImwPlatformWindow* pParent);
@@ -223,6 +227,7 @@ namespace ImWindow
 		bool								m_bSelfManagedTitleBar;
 		ClassNameFunctions					m_oClassNameFunctions;
 		char*								m_pMainTitle;
+		ImGuiContext*						m_pImGuiContext;
 		ImwPlatformWindow*					m_pMainPlatformWindow;
 		ImwPlatformWindowVector				m_lPlatformWindows;
 		ImwPlatformWindow*					m_pDragPlatformWindow;
@@ -256,6 +261,7 @@ namespace ImWindow
 
 		bool								m_bHasWantCaptureKeyboard;
 		bool								m_bHasWantCaptureMouse;
+		bool								m_bHasWantTextInput;
 
 		// Static
 	public:

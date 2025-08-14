@@ -2,9 +2,9 @@
 #ifndef __IM_WINDOW_MANAGER_DX11_H__
 #define __IM_WINDOW_MANAGER_DX11_H__
 
-#include "ImwConfig.h"
+#include "../ImwConfig.h"
 
-#include "ImwWindowManagerEasyWindow.h"
+#include "../ImWindowEasyWindow/ImwWindowManagerEasyWindow.h"
 
 struct IDXGIFactory;
 struct IDXGISwapChain;

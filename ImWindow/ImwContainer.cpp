@@ -457,6 +457,20 @@ namespace ImWindow
 		}
 	}
 
+	bool ImwContainer::IsFocusedWindow(ImwWindow* pWindow) const
+	{
+		if (m_lWindows.empty() == false)
+		{
+			ImwWindowVector::const_iterator itActive = m_lWindows.begin();
+			std::advance(itActive, m_iActiveWindow);
+			return itActive == std::find(m_lWindows.begin(), m_lWindows.end(), pWindow);
+		}
+		else
+		{
+			return (NULL != m_pSplits[0] && m_pSplits[0]->IsFocusedWindow(pWindow)) || (NULL != m_pSplits[1] && m_pSplits[1]->IsFocusedWindow(pWindow));
+		}
+	}
+
 	ImwWindow* ImwContainer::GetActiveWindow() const
 	{
 		if (!IsSplit() && !m_lWindows.empty())
@@ -590,7 +604,6 @@ namespace ImWindow
 		}
 		else if (HasWindow())
 		{
-
 			EWindowMode eWindowMode = GetWindowMode();
 
 			ImwWindow* pDraggedWindow = pWindowManager->GetDraggedWindow();
@@ -663,7 +676,6 @@ namespace ImWindow
 
 						iDraggedTabPosition = pWindowManager->GetDragTabPosition();
 						fMaxTabSize = fTabAreaWidth / (iSize + 1);
-						ImVec2 oTabSize;
 
 						float fTabPosX = oCursorPos.x + pWindowManager->GetDragOffset().x;
 
@@ -730,7 +742,7 @@ namespace ImWindow
 
 					if (ImGui::IsItemActive())
 					{
-						if (ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+						if (ImGui::IsMouseDragging( ImGuiMouseButton_Left ))
 						{
 							float fOffsetX = (oCursorPos.x - ImGui::GetItemRectMin().x) + (oFirstTabPos.x - oPos.x);
 							float fOffsetY = (oCursorPos.y - ImGui::GetItemRectMin().y);
@@ -934,9 +946,6 @@ namespace ImWindow
 		const ImwWindowManager::Config& oConfig = ImwWindowManager::GetInstance()->GetConfig();
 		ImDrawList* pDrawList = ImGui::GetWindowDrawList();
 		const ImGuiStyle& oStyle = ImGui::GetStyle();
-
-		//Calculate text size
-		ImVec2 oTextSize;
 
 		ImColor oNormalTab(0), oSelectedTab(0), oBorderColor(0);
 		switch (oConfig.m_eTabColorMode)

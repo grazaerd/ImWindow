@@ -2,9 +2,10 @@
 #ifndef __IM_PLATFORM_WINDOW_EASYWINDOW_H__
 #define __IM_PLATFORM_WINDOW_EASYWINDOW_H__
 
-#include "ImwConfig.h"
-#include "ImwPlatformWindow.h"
-#include "EasyWindow.h"
+#include "../ImwConfig.h"
+#include "../ImWindow/ImwPlatformWindow.h"
+#include "../EasyWindow/EasyWindow.h"
+
 
 namespace ImWindow
 {
@@ -39,9 +40,9 @@ namespace ImWindow
 		void								OnFocus(const EasyWindow* pWindow, bool bHasFocus);
 		void								OnMouseButton(const EasyWindow* pWindow, int iButton, bool bDown);
 		void								OnMouseMove(const EasyWindow* pWindow, int iX, int iY);
-		void								OnMouseWheel(const EasyWindow* pWindow, int iStep);
+		void								OnMouseWheel(const EasyWindow* pWindow, float fStep);
 		void								OnKey(const EasyWindow* pWindow, EasyWindow::EKey eKey, bool bDown);
-		void								OnChar(const EasyWindow* pWindow, int iChar);
+		void								OnChar(const EasyWindow* pWindow, unsigned long iChar);
 		void								OnDropFiles(const EasyWindow* pWindow, const EasyWindow::DropFiles& oFiles);
 
 		EasyWindow::EHoveredArea			GetHoveredArea(const EasyWindow* pWindow, int iX, int iY);
