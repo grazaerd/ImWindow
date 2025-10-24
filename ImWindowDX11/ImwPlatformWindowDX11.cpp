@@ -212,10 +212,10 @@ bool ImwPlatformWindowDX11::Init(ImwPlatformWindow* pMain)
 
 				// Create the input layout
 				D3D11_INPUT_ELEMENT_DESC local_layout[] = {
-					{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT,   0, (size_t)(&((ImDrawVert*)0)->pos), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,   0, (size_t)(&((ImDrawVert*)0)->uv),  D3D11_INPUT_PER_VERTEX_DATA, 0 },
-					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, (size_t)(&((ImDrawVert*)0)->col), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				};
+                    { "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT,   0, static_cast<UINT>(offsetof(ImDrawVert, pos)), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+                    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,   0, static_cast<UINT>(offsetof(ImDrawVert, uv)),  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+                    { "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, static_cast<UINT>(offsetof(ImDrawVert, col)), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+                };
 
 				iResult = m_pDX11Device->CreateInputLayout(local_layout, 3, pVertexShaderBlob->GetBufferPointer(), pVertexShaderBlob->GetBufferSize(), &m_pDX11InputLayout);
 				if (FAILED(iResult))

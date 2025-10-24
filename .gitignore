@@ -57,3 +57,6 @@ ImWindow.h
 
 Externals/glfw-*
 scripts/*.zip
+
+build
+.cache
