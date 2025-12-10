@@ -278,7 +278,7 @@ public:
 	{
 		SetForegroundWindow(m_pHandle);
 	}
-
+// https://stackoverflow.com/questions/53000291/how-to-smooth-ugly-jitter-flicker-jumping-when-resizing-windows-especially-drag
 	virtual void					SetSize(int iWidth, int iHeight, bool bClientSize) EW_OVERRIDE
 	{
 		RECT oRect = { 0, 0, iWidth, iHeight };
@@ -427,7 +427,7 @@ protected:
 	static bool						s_bClassInitialized;
 	static const int				c_iMaxKeys = 256;
 	static EKey						s_iTranslateKeys[c_iMaxKeys];
-
+	//check this func for flickering
 	static LRESULT					CALLBACK Proc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 	{
 		EasyWindowWin32* pThis = (EasyWindowWin32*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
@@ -533,7 +533,7 @@ protected:
 						m_bMouseTracking = true;
 					}
 				}*/
-
+// https://stackoverflow.com/questions/50898990/reduce-flickering-when-using-setwindowpos-to-change-the-left-edge-of-a-window
 				POINT oCursorPos;
 				GetCursorPos(&oCursorPos);
 
@@ -572,7 +572,7 @@ protected:
 						oRect.bottom = oCursorPos.y;
 						break;
 					}
-					SetWindowPos(pThis->m_pHandle, NULL, oRect.left, oRect.top, oRect.right - oRect.left, oRect.bottom - oRect.top, 0);
+					SetWindowPos(pThis->m_pHandle, NULL, oRect.left, oRect.top, oRect.right - oRect.left, oRect.bottom - oRect.top, 0); //might be this
 				}
 				else
 				{

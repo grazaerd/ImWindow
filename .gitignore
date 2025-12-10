@@ -59,4 +59,5 @@ Externals/glfw-*
 scripts/*.zip
 
 build
+build2
 .cache
